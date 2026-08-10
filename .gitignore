@@ -1,0 +1,5 @@
+output/
+data/*.xlsx
+.DS_Store
+.Rhistory
+.RData
