@@ -9,8 +9,8 @@ source(file.path("code", "load_data.R"))
 # ----------------------------------------------------------------------------
 fig1_design <- tribble(
   ~item, ~value,
-  "Room 1", paste("8.145", intToUtf8(215), "5.997", intToUtf8(215), "2.871 m; 139.176 m3; four chamfers"),
-  "Room 2", paste("approximately 8", intToUtf8(215), "6", intToUtf8(215), "2.87 m; nominal dimensions"),
+  "Room 1", paste("8.15", intToUtf8(215), "6.00", intToUtf8(215), "2.87 m; 139.176 m3; four chamfers"),
+  "Room 2", paste("8.00", intToUtf8(215), "6.00", intToUtf8(215), "2.87 m; nominal dimensions"),
   "Primary grid", "S1 across four sequential furnishing states, ten receiver positions and two rooms",
   "Sensitivity grid", "S2 available in four source-condition sets",
   "Acquisition", "DIRAC 6.0; B&K 4292-L source and 4189 microphone; height 1.2 m",
@@ -32,10 +32,10 @@ p1a <- ggplot() +
   box(0.5, 4.7, 6.7, 9.1, "#EAF3F8", COL["blue"]) +
   box(5.3, 9.5, 6.7, 9.1, "#FDF2E2", COL["orange"]) +
   annotate("text", x = 2.6, y = 8.65, label = "Room 1", fontface = "bold", size = 3.2) +
-  annotate("text", x = 2.6, y = 8.05, label = paste("8.145", intToUtf8(215), "5.997", intToUtf8(215), "2.871 m"), size = 2.85) +
+  annotate("text", x = 2.6, y = 8.05, label = paste("8.15", intToUtf8(215), "6.00", intToUtf8(215), "2.87 m"), size = 2.85) +
   annotate("text", x = 2.6, y = 7.48, label = "10 receivers\n4 chamfered corners", size = 2.85, lineheight = 0.9) +
   annotate("text", x = 7.4, y = 8.65, label = "Room 2", fontface = "bold", size = 3.2) +
-  annotate("text", x = 7.4, y = 8.05, label = paste("approx. 8", intToUtf8(215), "6", intToUtf8(215), "2.87 m"), size = 2.85) +
+  annotate("text", x = 7.4, y = 8.05, label = paste("8.00", intToUtf8(215), "6.00", intToUtf8(215), "2.87 m"), size = 2.85) +
   annotate("text", x = 7.4, y = 7.48, label = "10 receivers\nnominal dimensions", size = 2.85, lineheight = 0.9) +
   arrow_seg(5, 5, 6.35, 5.75) +
   box(0.55, 2.75, 3.75, 5.55, "white", COL["grey"]) +
@@ -67,7 +67,9 @@ p1b <- ggplot() +
   annotate("segment", x = 0.65, xend = 9.35, y = 3.95, yend = 3.95,
            linetype = "dashed", colour = COL["vermillion"], linewidth = 0.7) +
   annotate("text", x = 5, y = 4.2, label = "Evidence boundary", colour = COL["vermillion"], size = 2.85) +
-  arrow_seg(5, 5, 3.75, 3.15, linetype = "dashed", colour = COL["vermillion"]) +
+  annotate("segment", x = 5, xend = 5, y = 3.78, yend = 3.36,
+           colour = COL["vermillion"], linewidth = 0.55, linetype = "31") +
+  arrow_seg(5, 5, 3.38, 3.15, colour = COL["vermillion"]) +
   box(1.0, 9.0, 0.65, 3.05, "#FCEBE6", COL["vermillion"]) +
   annotate("text", x = 5, y = 2.62, label = "Prospective product scenario", fontface = "bold", size = 3.2) +
   annotate("text", x = 5, y = 1.92, label = "certified coefficients\nSabine-equivalent calculation", size = 2.85, lineheight = 0.88) +
@@ -441,8 +443,8 @@ source_grid <- tribble(
 s1_rows <- list(
   c("\\multicolumn{4}{l}{\\textbf{Case record}}"),
   c("Room 1", "Exact DXF footprint", "48.476 m$^2$", "139.176 m$^3$"),
-  c("Room 1", "Maximum dimensions", "8.145 $\\times$ 5.997 m", "Height 2.871 m"),
-  c("Room 2", "Documented dimensions", "approximately 8 $\\times$ 6 m", "Height approximately 2.87 m"),
+  c("Room 1", "Maximum dimensions", "8.15 $\\times$ 6.00 m", "Height 2.87 m"),
+  c("Room 2", "Documented dimensions", "8.00 $\\times$ 6.00 m", "Height 2.87 m"),
   c("Campaign", "Measurement date", "10 November 2020", "Sequential room-wide states"),
   c("Grid", "Files and cells", "130 IR files", "120 receiver cells"),
   c("Repeats", "Room 2 listening position", "Five cells with three takes", "Averaged within receiver"),
