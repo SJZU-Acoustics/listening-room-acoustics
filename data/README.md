@@ -59,5 +59,4 @@ SHA-256 digests are written to `output/data_lock/fig1_photographs.csv` at run ti
 - `room1_rear.jpg` — Room 1, rear, with the curtains (Figure 1b)
 - `room2_front.jpg` — Room 2, front, with the curtains (Figure 1c)
 
-The photographs are undated. They show the rooms and their visible furnishings, not a
-particular measured furnishing state.
+The photographs were taken on the measurement day, 10 November 2020, and show the curtains used in the measurements; no carpet appears in them.
