@@ -4,13 +4,13 @@ R code for reproducing the statistical analyses, figures and tables for the manu
 
 - R 4.5+ (developed and verified on R 4.5.3)
 
-- CRAN packages: `tidyverse`, `readxl`, `patchwork`, `scales`, `ragg`, `lme4`, `lmerTest`, `boot`, `jsonlite`, `digest`
+- CRAN packages: `tidyverse`, `readxl`, `patchwork`, `scales`, `ragg`, `lme4`, `lmerTest`, `boot`, `jsonlite`, `digest`, `jpeg`
 
 - Install:
 
   ```r
   install.packages(c("tidyverse", "readxl", "patchwork", "scales", "ragg",
-                     "lme4", "lmerTest", "boot", "jsonlite", "digest"))
+                     "lme4", "lmerTest", "boot", "jsonlite", "digest", "jpeg"))
   ```
 
 - No non-standard hardware is required. A complete run takes about two to three minutes on a normal desktop; the bootstrap and jackknife modules account for most of it.
@@ -29,14 +29,16 @@ The 130 raw impulse-response WAVs are **not** part of the deposit. Two analyses 
 
 Two small design inputs ship with this repository in `data/design_inputs/` because they are transcriptions of documents rather than measurements: the certified absorption library taken from the eleven perforated-panel test reports, and the six-band absorption assumptions of the design's own Sabine calculation. The renovation was never installed, so neither supports any validation claim.
 
+The three room photographs of Figure 1a–c also ship with this repository, in `data/room_photographs/`. Figure 1d,e is not a survey: it reconstructs each receiver position by triangulation from the deposited source–receiver distances.
+
 ## File structure
 
 - `run_all.R` — master script: runs every analysis module in dependency order, then builds every manuscript display item.
 - `code/load_data.R` — single data entry: maps each canonical processed-table name to its workbook sheet and reads it with `col_types = "text"` plus a CSV round-trip, so column types match the working pipeline exactly.
 - `code/helpers.R`, `code/factorial_helpers.R` — shared design constants (core octave bands, condition levels, bootstrap N and seed) and the design-based factorial estimator with its BCa bootstrap and jackknife.
-- `code/style.R` — shared publication plot styling and the LaTeX table writer.
+- `code/style.R` — shared publication plot styling, table-cell formatting and the writer for Supplementary-table body rows.
 - `code/a*.R` — the analysis modules, one per analysis of the paper: endpoint convergence (A03), technical repeatability (A04), the global T20 factorial (A05), room consistency (A07), cross-endpoint convergence (A08), source sensitivity (A09), spatial uniformity (A10), listening-position representativeness (A11), the design target gap (A12), low-frequency modal diagnosis (A13), robustness variants (A15), one-third-octave structure (A17), the certified-product envelope (A18), the low-frequency wavelet boundary (A19), and the two post-review checks — common-band broadband estimates (A21) and the scenario uncertainty envelope (A23).
-- `code/build_displays.R` — Figures 1–5, Table 1 and Supplementary Tables S1–S16.
+- `code/build_displays.R` — Figures 1–5, Table 1 and Supplementary Tables S1–S16. Each Supplementary-table fragment holds the body rows only and is named after its analysis; the captions and column headers belong to the manuscript's Supplementary Information.
 
 ## Usage
 
@@ -49,7 +51,7 @@ Rscript run_all.R
 Outputs are written to:
 
 - `output/figures/` — Figures 1–5 (PNG, 600 dpi, 178 mm)
-- `output/tables/` — Table 1 and `output/tables/si/` Supplementary Tables S1–S16 (LaTeX fragments)
+- `output/tables/` — Table 1 and, in `output/tables/si/`, the body rows of Supplementary Tables S1–S16 as LaTeX fragments named by analysis (for example `si_distances.tex` for Table S2)
 - `output/data_lock/` — the plotted values behind every figure panel and table (CSV)
 - `output/<analysis id>/` — the full regenerated result tables, plot, `results.md`, `session_info.txt` and `run.log` of each analysis module
 
@@ -63,7 +65,7 @@ Rscript run_all.R 2>&1 | tee output/run_log.txt
 
 ## Verification
 
-Run against the deposited workbook, this pipeline reproduces the manuscript's display items **byte-identically**: all 5 figures, all 18 data-lock CSVs and all 17 LaTeX table fragments match the values in the paper exactly. Figure 4b jitters its receiver points, so the render is seeded to keep it reproducible.
+Run against the deposited workbook, this pipeline reproduces the manuscript's display items **byte-identically**: all 5 figures, all 20 data-lock CSVs and all 17 LaTeX table fragments match the values in the paper exactly. Figure 4b jitters its receiver points, so the render is seeded to keep it reproducible.
 
 ## Notes
 

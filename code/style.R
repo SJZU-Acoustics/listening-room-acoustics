@@ -102,6 +102,10 @@ fmt <- function(x, digits = 3) {
 fmt_p <- function(x) {
   ifelse(x < 0.001, "<0.001", formatC(x, digits = 3, format = "f"))
 }
+# Table cells: a negative value takes a math minus, never a text hyphen.
+fmt_tex <- function(x, digits = 3) {
+  sub("^-", "$-$", fmt(x, digits))
+}
 
 tex_escape <- function(x) {
   x <- as.character(x)
@@ -129,35 +133,9 @@ tex_metric <- function(x) {
          C50 = "$C_{50}$", C80 = "$C_{80}$", .default = as.character(x))
 }
 
-write_longtable <- function(path, caption, label, colspec, headers, rows, landscape = FALSE,
-                            font_cmd = "\\scriptsize", arraystretch = 1.08) {
-  lines <- c()
-  if (landscape) lines <- c(lines, "\\begin{landscape}")
-  lines <- c(
-    lines,
-    paste0("\\begingroup", font_cmd),
-    "\\setlength{\\tabcolsep}{2pt}",
-    paste0("\\renewcommand{\\arraystretch}{", arraystretch, "}"),
-    paste0("\\begin{longtable}{@{}", colspec, "@{}}"),
-    paste0("\\caption{", caption, "}\\label{", label, "}\\\\"),
-    "\\toprule",
-    paste(headers, collapse = " & "), "\\\\",
-    "\\midrule",
-    "\\endfirsthead",
-    paste0("\\multicolumn{", length(headers), "}{l}{\\textit{Continued from previous page}}\\\\"),
-    "\\toprule",
-    paste(headers, collapse = " & "), "\\\\",
-    "\\midrule",
-    "\\endhead",
-    paste0("\\midrule\\multicolumn{", length(headers), "}{r}{\\textit{Continued on next page}}\\\\"),
-    "\\endfoot",
-    "\\bottomrule",
-    "\\endlastfoot"
-  )
-  if (length(rows)) {
-    lines <- c(lines, vapply(rows, function(row) paste0(paste(row, collapse = " & "), " \\\\"), character(1)))
-  }
-  lines <- c(lines, "\\end{longtable}", "\\endgroup")
-  if (landscape) lines <- c(lines, "\\end{landscape}")
+# Supplementary table fragments hold the body rows only. The column
+# specification, caption and header rows live in supplementary_information.tex.
+write_si_rows <- function(path, rows) {
+  lines <- vapply(rows, function(row) paste0(paste(row, collapse = " & "), " \\\\"), character(1))
   writeLines(lines, path, useBytes = TRUE)
 }

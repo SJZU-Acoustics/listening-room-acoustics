@@ -49,3 +49,15 @@ Two transcription tables, not measurements, so they travel with the code:
 
 Neither supports a validation claim: the renovation was never installed and no
 post-treatment measurement or simulation exists.
+
+## `room_photographs/` (shipped here)
+
+The three site photographs of Figure 1a–c, byte-identical to the originals; their
+SHA-256 digests are written to `output/data_lock/fig1_photographs.csv` at run time.
+
+- `room1_front.jpg` — Room 1, front (Figure 1a)
+- `room1_rear.jpg` — Room 1, rear, with the curtains (Figure 1b)
+- `room2_front.jpg` — Room 2, front, with the curtains (Figure 1c)
+
+The photographs are undated. They show the rooms and their visible furnishings, not a
+particular measured furnishing state.
