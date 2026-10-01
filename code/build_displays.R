@@ -59,7 +59,19 @@ layout_panel <- function(room, colour) {
   z <- filter(fig1_layout, room_id == room)
   s <- z$source_separation_m[1]
   sources <- tibble(x = 0, y = c(-s / 2, s / 2), label = c("S1", "S2"))
+  # Room 1: WALL-layer floor convex hull from the delivered DXF, rotated to
+  # match the dimensioned plan. Room 2: nominal rectangle. Wall registration
+  # is schematic: front offset 1.3/1.2 m, array centred across the room.
+  walls <- if (room == 1) tibble(
+    x = c(-7.650025253, -0.353553391, 0, 0, -0.353553391,
+          -7.650025253, -8.145, -8.145) + 1.3,
+    y = c(2.998553391, 2.998553391, 2.645, -2.645, -2.998553391,
+          -2.998553391, -2.503578644, 2.503578644)
+  ) else tibble(x = c(-6.8, 1.2, 1.2, -6.8), y = c(-3, -3, 3, 3))
+  walls <- bind_rows(walls, walls[1, ])
   ggplot(z, aes(x = -depth_from_source_line_m, y = along_source_line_m)) +
+    geom_path(data = walls, aes(x = x, y = y), inherit.aes = FALSE,
+              colour = "black", linewidth = 0.65) +
     annotate("segment", x = 0, xend = 0, y = -s / 2, yend = s / 2,
              linetype = "22", linewidth = 0.35, colour = COL["grey"]) +
     annotate("text", x = 0.3, y = 0, label = paste0(fmt(s, 1), " m"), angle = 90,
@@ -70,9 +82,9 @@ layout_panel <- function(room, colour) {
     geom_point(data = sources, aes(x = x, y = y), inherit.aes = FALSE, shape = 17, size = 2.2) +
     geom_text(data = sources, aes(x = x + 0.2, y = y, label = label), inherit.aes = FALSE,
               hjust = 0, size = 8 / .pt, family = BASE_FAMILY) +
-    annotate("segment", x = -5.6, xend = -4.6, y = -2.55, yend = -2.55, linewidth = 0.5) +
-    annotate("text", x = -5.1, y = -2.7, label = "1 m", vjust = 1, size = 8 / .pt, family = BASE_FAMILY) +
-    coord_fixed(xlim = c(-5.75, 0.95), ylim = c(-3.05, 2.45), expand = FALSE, clip = "off") +
+    annotate("segment", x = -6.1, xend = -5.1, y = -3.45, yend = -3.45, linewidth = 0.5) +
+    annotate("text", x = -5.6, y = -3.57, label = "1 m", vjust = 1, size = 8 / .pt, family = BASE_FAMILY) +
+    coord_fixed(xlim = c(-7.05, 1.6), ylim = c(-4.05, 3.3), expand = FALSE, clip = "off") +
     theme_schematic()
 }
 

@@ -29,7 +29,7 @@ The 130 raw impulse-response WAVs are **not** part of the deposit. Two analyses 
 
 Two small design inputs ship with this repository in `data/design_inputs/` because they are transcriptions of documents rather than measurements: the certified absorption library taken from the eleven perforated-panel test reports, and the six-band absorption assumptions of the design's own Sabine calculation. The renovation was never installed, so neither supports any validation claim.
 
-The three room photographs of Figure 1a–c also ship with this repository, in `data/room_photographs/`. Figure 1d,e is not a survey: it reconstructs each receiver position by triangulation from the deposited source–receiver distances.
+The three room photographs of Figure 1a–c also ship with this repository, in `data/room_photographs/`. Figure 1d,e reconstructs each receiver position by triangulation from the deposited source–receiver distances. Solid outlines show the Room 1 model footprint and the nominal Room 2 rectangle. Their placement around the reconstructed array is schematic, with the source line centred across the room and 1.3 m (Room 1) or 1.2 m (Room 2) from the front wall.
 
 ## File structure
 
